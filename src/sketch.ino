@@ -50,7 +50,7 @@ enum MotionState {
 int previousValue = -1;
 long lastChangeTime = 0L;
 MotionState currentState = Stopped;
-#endif
+#endif // If Motion Sensor
 
 #define RAILROAD_CROSSING "RRCRBELL.WAV"
 #define BOMB_SIREN "BOMBSIRN.WAV"
@@ -114,6 +114,8 @@ void loop() {
 
   // Now deal with the real world
   if (value != previousValue) {
+    // Wait 10ms for debounce of the switch
+    delay(10);
     handleValueChange(value);
   } else if (currentState == Moving) {
     handleValueNoChange(sampleTime);
