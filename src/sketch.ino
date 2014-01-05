@@ -109,6 +109,7 @@ void loop() {
   if (previousValue < 0) {
     previousValue = value;
     lastChangeTime = sampleTime;
+    delay(DELAY_TIME);
     return;
   }
 
