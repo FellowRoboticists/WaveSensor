@@ -40,7 +40,15 @@ boolean state = false;
 // or increase it, but you might need to increase the STOP_THRESHOLD.
 // 
 // Think about it.
-#define DELAY_TIME 200
+//
+// So I had this set to 200ms originally. It worked OK, I guess, but
+// if the switch changes occurred too fast, it was filtering out changes
+// and made the thing hang in play mode with no way to turn it off short
+// of a reset. I tried 100ms and it improved somewhat. Knocking it down
+// to 10ms removed almost all the sensitivity. I'm going to stick with
+// this.
+//
+#define DELAY_TIME 10
 
 enum MotionState {
   Stopped,
