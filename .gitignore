@@ -2,3 +2,6 @@
 .build
 lib/VCNL4000/
 lib/WaveHC/
+lib/Nordic_BLE/
+lib/RBL_BLEShield/
+tags

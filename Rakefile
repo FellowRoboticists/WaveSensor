@@ -7,6 +7,7 @@
 
 LIB_DIR = 'lib'
 BASE_DIR = '..'
+BLE_BASE_DIR = '../BLEShield/Arduino/libraries'
 
 WAVEHC_LIB = File.join(LIB_DIR, 'WaveHC')
 WAVEHC_SRC = 'wavehc/WaveHC'
@@ -24,6 +25,17 @@ LIBS.each do | lib |
 
   task :default => File.join(LIB_DIR, lib)
 end
+
+BLE_LIBS = %w{ Nordic_BLE RBL_BLEShield }
+
+BLE_LIBS.each do | lib |
+  directory File.join(LIB_DIR, lib) do
+    cp_r File.join(BLE_BASE_DIR, lib), LIB_DIR
+  end
+
+  task :default => File.join(LIB_DIR, lib)
+end
+
 
 task :default => WAVEHC_LIB
 
