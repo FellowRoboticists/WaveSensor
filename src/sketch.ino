@@ -1,13 +1,14 @@
 // -*- c -*-
 // WaveSensor Arduino sketch
 //
-// Copyright (c) 2013 Dave Sieh
+// Copyright (c) 2013,2014 Dave Sieh
 //
 // See LICENSE.txt for details.
 
 #include <WaveHC.h>
 #include <WaveUtil.h>
 #include <VCNL4000.h>
+#include <pspc_support.h>
 
 #define ENABLED 1
 #define DISABLED 0
@@ -83,7 +84,7 @@ void setup() {
 
   setupWave();
 
-  Serial.println("Ready!");
+  Serial.println(P("Ready!"));
 }
 
 void loop() {
@@ -92,13 +93,13 @@ void loop() {
 
   if (distance > 2150) {
     if (!state) {
-      Serial.println("InRange");
+      Serial.println(P("InRange"));
       state = true;
       playSound(RAILROAD_CROSSING);
     }
   } else {
     if (state) {
-      Serial.println("OutOfRange");
+      Serial.println(P("OutOfRange"));
       state = false;
       if (wave.isplaying) {
 	wave.stop();
@@ -135,9 +136,9 @@ void loop() {
 }
 
 void setupWave() {
-  Serial.println("Setting up Wave");
+  Serial.println(P("Setting up Wave"));
 
-  Serial.print("Free RAM: ");
+  Serial.print(P("Free RAM: "));
   Serial.println(FreeRam());
 
   if (!card.init()) {
@@ -156,16 +157,16 @@ void setupWave() {
     error("No valid FAT partition!");
   }
 
-  Serial.print("Using partition: ");
+  Serial.print(P("Using partition: "));
   Serial.print(part, DEC);
-  Serial.print(", type is FAT");
+  Serial.print(P(", type is FAT"));
   Serial.println(vol.fatType(), DEC);
 
   if (!root.openRoot(vol)) {
     error("Can't open root directory!");
   }
 
-  Serial.println("Done Setting up Wave");
+  Serial.println(P("Done Setting up Wave"));
 }
 
 void playSound(char *name) {
@@ -214,7 +215,7 @@ void handleValueChange(int value) {
   if (currentState == Stopped) {
     currentState = Moving;
     digitalWrite(LED_PIN, HIGH);
-    Serial.println("Now moving...");
+    Serial.println(P("Now moving..."));
     playSound(RAILROAD_CROSSING);
   }
 }
@@ -224,9 +225,9 @@ void handleValueNoChange(int sampleTime) {
   if (duration > STOP_THRESHOLD) {
     currentState = Stopped;
     digitalWrite(LED_PIN, LOW);
-    Serial.print("No change for too long (");
+    Serial.print(P("No change for too long ("));
     Serial.print(duration);
-    Serial.println(") ms. Stopped");
+    Serial.println(P(") ms. Stopped"));
     if (wave.isplaying) {
       wave.stop();
     }
